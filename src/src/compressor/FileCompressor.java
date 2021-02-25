@@ -13,6 +13,7 @@ public class FileCompressor {
 //		byte[] fileData = FileHandler.openFile("../samples/peterpiper.txt");
 //		for (byte byteValue : fileData)
 //			System.out.print(String.format("%c ", byteValue));
+		
 //		Output Example:
 //		List<Byte> fileDataAsList = new ArrayList<Byte>();
 //		for (Byte byteValue : fileData)
