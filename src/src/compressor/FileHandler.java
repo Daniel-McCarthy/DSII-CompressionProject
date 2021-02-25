@@ -22,6 +22,7 @@ public class FileHandler {
 			FileOutputStream outputFile = new FileOutputStream(filePath);
 			byte[] fileDataArray = new byte[fileData.size()];
 			
+			// Convert List<Byte> to byte[] for output.
 			for (int i = 0; i < fileDataArray.length; i++)
 				fileDataArray[i] = fileData.get(i);
 			
