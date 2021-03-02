@@ -14,7 +14,7 @@ public class FileCompressor {
 //		for (byte byteValue : fileData)
 //			System.out.print(String.format("%c ", byteValue));
 		
-//		Output Example:
+//		Output Examplxdsasdwasdwasde:
 //		List<Byte> fileDataAsList = new ArrayList<Byte>();
 //		for (Byte byteValue : fileData)
 //			fileDataAsList.add(byteValue);
