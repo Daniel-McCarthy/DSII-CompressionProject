@@ -18,6 +18,17 @@ public class CompressionAlgorithm {
 		}
 		System.out.println("OLD "+size+"::: "+ whole );
 	}
+	
+	// Takes a string that contains decimal numbers separated by spaces and converts it to a standard text string.
+	public static String numberStringToText(String input) {
+		String[] segments = input.split(" ");
+		String output = "";
+		for (String decimalString : segments) {
+			int value = Integer.parseInt(decimalString);
+			output += (char)value;
+		}
+		return output;
+	}
 		
 	public static String compress(String string) {		
 		printASCII(string);
@@ -149,18 +160,4 @@ public class CompressionAlgorithm {
 		System.out.println("UNC "+ size + "::: " +output);
 		return output;
 	}
-	
-	
-	 public static void main(String[] args) {
-		 String string = compress("thisisthe");	 
-		 //Convert to Binary (to save);
-		 string = decompress(string);	
-		 
-		 String string2 = compress("Last Friday I saw a spotted striped blue worm shake hands with a legless lizard.\n"
-		 		+ "Pair your designer cowboy hat with scuba gear for a memorable occasion.\n"
-		 		+ "Please wait outside of the house.");
-		 string2 = decompress(string2);	
-
-		 
-	 }
 }
