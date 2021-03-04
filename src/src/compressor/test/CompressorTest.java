@@ -1,6 +1,9 @@
 package compressor.test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -8,7 +11,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import compressor.CompressionAlgorithm;
+import junit.framework.Assert;
+
 class CompressorTest {
+	CompressionAlgorithm algorithm = new CompressionAlgorithm();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -27,8 +34,15 @@ class CompressorTest {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void compressionDecompressionTest() {
+		String inputText = "How much would could a woodchuck chuck if a woodchuck could chuck wood?";
+		String compressedText = algorithm.compress(inputText);
+		
+		Assert.assertFalse(String.format("Compression of string failed to result in any change. Both input and compressed string both were: '%s'.", inputText), inputText.equals(compressedText));
+		Assert.assertTrue(String.format("Compressed text failed to be smaller than input text. Input Length: %d, Compressed Length: %d.", inputText.length(), compressedText.length()), compressedText.length() < inputText.length());
+		
+		String decompressedText = algorithm.decompress(compressedText);
+		Assert.assertTrue(String.format("Decompressed string failed to be the same as input text.\n\tExpected: %s\n\tGot:%s",  inputText, compressedText), inputText.contentEquals(decompressedText));
 	}
 
 }
