@@ -17,6 +17,18 @@ public class FileHandler {
 
 	}
 	
+	public static byte[] openFile(File file) {
+		try {
+			FileInputStream inputFile = new FileInputStream(file.getAbsolutePath());
+			byte[] fileData = inputFile.readAllBytes();
+			inputFile.close();
+			return fileData;	
+		} catch (IOException e) {
+			System.out.println(String.format("Failed to find or read file at: \"%s\". Exception: %s", file.getAbsoluteFile(), e.getMessage()));
+		}
+		return null;
+	}
+	
 	public static void saveFile(String filePath, String fileData) {
 		try {
 			FileOutputStream outputFile = new FileOutputStream(filePath);
