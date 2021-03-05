@@ -17,14 +17,10 @@ public class FileHandler {
 
 	}
 	
-	public static void saveFile(String filePath, List<Byte> fileData) {
+	public static void saveFile(String filePath, String fileData) {
 		try {
 			FileOutputStream outputFile = new FileOutputStream(filePath);
-			byte[] fileDataArray = new byte[fileData.size()];
-			
-			// Convert List<Byte> to byte[] for output.
-			for (int i = 0; i < fileDataArray.length; i++)
-				fileDataArray[i] = fileData.get(i);
+			byte[] fileDataArray = fileData.getBytes();
 			
 			outputFile.write(fileDataArray);
 			outputFile.close();
