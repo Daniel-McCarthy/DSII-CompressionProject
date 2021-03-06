@@ -59,13 +59,15 @@ public class CompressionAlgorithm {
 							//There is a match from before
 							ASCIISpot = compressedDict.get(fullCharString);							
 							addToIVar = addToIVar+1;
+							distance = distance + 1;
 						} else {
 							//Regular Case, no matches found
 							
-							//VV ALSO IMPORTANT, stops thing from adding extra dictonary entries
-							if (fullCharString.equals(InitialCharString) ==true ){
-								compressedDict.put(fullCharString, currentDictSpot);
-							}
+							compressedDict.put(fullCharString, currentDictSpot);
+
+							
+//							System.out.print(i + " ");           //dictonary printing
+//							System.out.println(fullCharString);  //dictionary printing
 							size = size +1;
 							output = output + ASCIISpot + " ";
 							//System.out.println(output);	
@@ -77,8 +79,9 @@ public class CompressionAlgorithm {
 						//No more characters, stop looking for matches
 						compressedDict.put(fullCharString, currentDictSpot);
 						output = output + ASCIISpot + " ";
-						//System.out.println(output);					
-						break;
+						i=i+100; //stop from adding extra
+						//System.out.println(output);											
+						break;						
 					}
 				}
 			}			
