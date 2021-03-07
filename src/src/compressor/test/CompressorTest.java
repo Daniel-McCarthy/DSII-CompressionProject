@@ -50,4 +50,20 @@ class CompressorTest {
 			Assert.assertEquals(compressedString.indexOf(word), compressedString.lastIndexOf(word));
 		}
 	}
+	
+	@Test
+	void compressionDecompressionTest_UniqueData() {
+		// Note: No repetition of data to identify and compress.
+		String inputText = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()";
+		
+		String compressedString = algorithm.compress(inputText);
+		String compressedStringAsText = algorithm.numberStringToText(compressedString);
+		String decompressedText = algorithm.numberStringToText(algorithm.decompress(compressedString));
+		
+		// Data that is entirely unique should not be compressed at all.
+		// Validate that the data is identical at all stages.
+		Assert.assertTrue(String.format("Compressed text failed to be identical to input data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, compressedStringAsText), inputText.contentEquals(compressedStringAsText));
+		Assert.assertTrue(String.format("Compressed text failed to be identical to decompressed data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, compressedStringAsText), decompressedText.contentEquals(compressedStringAsText));	
+		Assert.assertTrue(String.format("Decompressed text failed to be identical to input data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, decompressedText), inputText.contentEquals(decompressedText));
+	}
 }
