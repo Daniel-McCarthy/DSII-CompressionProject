@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import compressor.FileHandler;
-import compressor.CompressionAlgorithm;
+import compressor.Lzw;
 
 public class FileCompressor {
 ////		Input Example:
@@ -70,9 +70,9 @@ public class FileCompressor {
 			 textToCompress += (char)character;
 		 }
 		 
-		 String compressedData = CompressionAlgorithm.compress(textToCompress);
-		 String compressedDataAsText = CompressionAlgorithm.numberStringToText(compressedData);
-		 String decompressedText = CompressionAlgorithm.decompress(compressedData);
+		 String compressedData = Lzw.compress(textToCompress);
+		 String compressedDataAsText = Lzw.numberStringToText(compressedData);
+		 String decompressedText = Lzw.decompress(compressedData);
 		 String fileNameForCompressedData = String.format("%s.c%s", fileNameWithoutExtension, fileExtension);
 		 
 		 // Print input/output text, their sizes, and the percentage difference between the two string sizes.
@@ -91,11 +91,11 @@ public class FileCompressor {
 	 }
 	 
 	 static void compressStringAndPrintResult(String textToCompress) {
-		 String compressedData = CompressionAlgorithm.compress(textToCompress);
-		 String decompressedText = CompressionAlgorithm.decompress(compressedData);	
+		 String compressedData = Lzw.compress(textToCompress);
+		 String decompressedText = Lzw.decompress(compressedData);	
 		 
 		 // Print input/output text, their sizes, and the percentage difference between the two string sizes.
-		 String compressedDataAsText = CompressionAlgorithm.numberStringToText(compressedData);
+		 String compressedDataAsText = Lzw.numberStringToText(compressedData);
 		 System.out.println(String.format("\n\nInput Text:\n\n'%s'", textToCompress));
 		 System.out.println(String.format("Input Size: %d", textToCompress.length()));
 		 System.out.println(String.format("\n\nCompressed Text Output:\n\n'%s'", compressedDataAsText));

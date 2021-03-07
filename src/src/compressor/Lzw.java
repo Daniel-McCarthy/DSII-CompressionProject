@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CompressionAlgorithm {
+public class Lzw {
 	//Prints out ASCII for string, it is just for comparison 
 	private static void printASCII(String string)
 	{

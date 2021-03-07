@@ -7,10 +7,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import compressor.CompressionAlgorithm;
+import compressor.Lzw;
 
 class CompressorTest {
-	CompressionAlgorithm algorithm = new CompressionAlgorithm();
+	Lzw algorithm = new Lzw();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
