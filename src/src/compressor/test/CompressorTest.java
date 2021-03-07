@@ -133,4 +133,25 @@ class CompressorTest {
 		Assert.assertTrue(String.format("Compressed text failed to be identical to decompressed data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, compressedStringAsText), decompressedText.contentEquals(compressedStringAsText));	
 		Assert.assertTrue(String.format("Decompressed text failed to be identical to input data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, decompressedText), inputText.contentEquals(decompressedText));
 	}
+	
+	@Test
+	void overtwoCharacterMatchRegressionTest() {
+		// A defect was found where matches greater than two characters being added to the dictionary, the third character
+		// was not selected correctly, causing lost/damaged data in the compression process. This validates that this
+		// issue is no longer occurring and does not return.
+		
+		// Due to the inaccessibility to the dictionary during compression, we can't validate the corruption of the
+		// dictionary that was experienced, but we can validate that this edge case is functioning normally.
+		String inputText = "thisisthethethe";
+		String compressedString = algorithm.compress(inputText);
+		String compressedStringAsText = algorithm.numberStringToText(compressedString);
+		String decompressedText = algorithm.numberStringToText(algorithm.decompress(compressedString));
+		
+		// Validate that compressed data is both different than input, and smaller.
+		Assert.assertFalse(String.format("Compression of string failed to result in any change. Both input and compressed string both were: '%s'.", inputText), inputText.equals(compressedStringAsText));
+		Assert.assertTrue(String.format("Compressed text failed to be smaller than input text. Input Length: %d, Compressed Length: %d.", inputText.length(), compressedStringAsText.length()), compressedStringAsText.length() < inputText.length());
+		
+		// De-compressed data must be exactly identical to input data.
+		Assert.assertTrue(String.format("Decompressed string failed to be the same as input text.\n\tExpected: %s\n\tGot:%s",  inputText, decompressedText), inputText.contentEquals(decompressedText));
+	}
 }
