@@ -1,5 +1,6 @@
 package compressor.test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,11 +13,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import compressor.FileHandler;
 import compressor.Lzw;
 
 class CompressorTest {
 	Lzw algorithm = new Lzw();
 	Random random = new Random();
+	List<File> filesToCleanup = new ArrayList<File>();
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -32,6 +35,15 @@ class CompressorTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
+		while (filesToCleanup.size() > 0) {
+			File file = filesToCleanup.get(0);
+			try {
+				file.delete();
+			} catch (Exception ex) {
+				System.out.println(String.format("Failed to delete file %s after test. Exception: %s", file.getName(), ex.getMessage()));
+			}
+			filesToCleanup.remove(0);
+		}
 	}
 
 	@Test
@@ -153,5 +165,33 @@ class CompressorTest {
 		
 		// De-compressed data must be exactly identical to input data.
 		Assert.assertTrue(String.format("Decompressed string failed to be the same as input text.\n\tExpected: %s\n\tGot:%s",  inputText, decompressedText), inputText.contentEquals(decompressedText));
+	}
+	
+	@Test
+	void fileIOTest() {
+		String testData = "Thisdatashouldbereadbackin correctly, not incorrectly.";
+		String filePath = "test-file.txt";
+		FileHandler.saveFile(filePath, testData);
+		
+		// Test reading from file path.
+		byte[] fileDataFromPath = FileHandler.openFile(filePath);
+		String fileDataFromPathString = "";
+		 for (byte character : fileDataFromPath) {
+			 fileDataFromPathString += (char)character;
+		 }
+		
+		Assert.assertArrayEquals(testData.getBytes(), fileDataFromPath);
+		Assert.assertTrue(String.format("File read from path failed to match input data. \nExpected: %s\nGot: %s", testData, fileDataFromPathString), testData.contentEquals(fileDataFromPathString));
+		
+		// Test reading from File object.
+		File savedFile = new File(filePath);
+		filesToCleanup.add(savedFile);
+		byte[] fileDataFromFileObj = FileHandler.openFile(savedFile);
+		String fileDataFromFileObjString = "";
+		 for (byte character : fileDataFromFileObj) {
+			 fileDataFromFileObjString += (char)character;
+		 }
+		Assert.assertArrayEquals(testData.getBytes(), fileDataFromFileObj);
+		Assert.assertTrue(String.format("File read from file obj failed to match input data. \nExpected: %s\nGot: %s", testData, fileDataFromFileObjString), testData.contentEquals(fileDataFromFileObjString));
 	}
 }
