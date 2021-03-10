@@ -21,6 +21,9 @@ public class Lzw {
 	
 	// Takes a string that contains decimal numbers separated by spaces and converts it to a standard text string.
 	public static String numberStringToText(String input) {
+		if (input == "")
+			return input;
+		
 		String[] segments = input.split(" ");
 		String output = "";
 		for (String decimalString : segments) {
@@ -92,6 +95,9 @@ public class Lzw {
 	}
 
 	public static String decompress(String strings) {
+		if (strings.contentEquals(""))
+			return strings;
+		
 		//https://www.geeksforgeeks.org/split-string-java-examples///	
 		//https://beginnersbook.com/2013/12/how-to-convert-string-to-int-in-java/
 		String[] newStr = strings.split(" "); 

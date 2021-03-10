@@ -147,6 +147,21 @@ class CompressorTest {
 	}
 	
 	@Test
+	void compressionDecompressionTest_NoData() {
+		String inputText = "";
+		
+		String compressedString = algorithm.compress(inputText);
+		String compressedStringAsText = algorithm.numberStringToText(compressedString);
+		String decompressedText = algorithm.numberStringToText(algorithm.decompress(compressedString));
+		
+		// The compress and de-compress functions should be able to return successfully
+		// when given an empty string, to assure that this does not break our program.
+		Assert.assertTrue(String.format("Compressed text failed to be identical to input data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, compressedStringAsText), inputText.contentEquals(compressedStringAsText));
+		Assert.assertTrue(String.format("Compressed text failed to be identical to decompressed data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, compressedStringAsText), decompressedText.contentEquals(compressedStringAsText));	
+		Assert.assertTrue(String.format("Decompressed text failed to be identical to input data.\n\tExpected: '%s'\n\tGot: '%s'", inputText, decompressedText), inputText.contentEquals(decompressedText));
+	}
+	
+	@Test
 	void overtwoCharacterMatchRegressionTest() {
 		// A defect was found where matches greater than two characters being added to the dictionary, the third character
 		// was not selected correctly, causing lost/damaged data in the compression process. This validates that this
